@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Card Match: Memory Game</title>
+    <meta name="description" content="Card Matching...memory game">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <div class="notice-board-container" id="notice1">
+        <section class="notice-board"> 
+            <h1 class="header-with-sub">memory match</h1>
+            <p class="indent"> ....have you got what it takes?</p>
+            <button>play</button>
+        </section>
+    </div>
+    <div class="notice-board-container hide" id="notice2">
+        <section class="notice-board game-mode"> 
+            <h1>choose game mode</h1>
+            <ul>
+                <li>single player</li>
+                <li>multi player</li>
+            </ul>
+        </section>
+    </div>
+    <div class="notice-board-container hide" id="notice3">
+        <section class="notice-board">
+            <h1>what do I call you?</h1>
+            <form action="#" method="get">
+                <input type="text" name="username"
+                 maxlength=15 autofocus required pattern= "^[A-Za-z]*$">
+                <button type="submit">ok</button>
+            </form>
+        </section>
+    </div>
+    <div class="container hide">
+        <section class="score-panel">
+            <ul class="left hide">
+                <li id="resume">resume</li>
+                <li id="restart">restart 
+                    <i class="fa fa-repeat"></i>
+                </li>
+                <li class="arrow-down">instructions</li>
+                <li id= "info" class="hide">
+                    <ul class="info">
+                        <li>&#x2022; try to remember all the similar cards you've seen and their relative positions</li>
+                        <li>&#x2022; click the cards to reveal the matching pairs</li>
+                        <li>&#x2022; at 2mins you will lose the game no matter your progress</li>
+                        <li>&#x2022; get extra 20points each time you match 3 consecutive cards correctly or match a pair correctly when move count is at 2</li>
+                    </ul>
+                <li>
+                    leader score board
+                </li>
+                <li id="exit">Exit</li>
+            </ul>
+                <i class= "fa fa-pause-circle options"></i>
+            <ul class="right">
+                <li>player:</li>
+                <li>time count: <span id="time-count"></span></li>
+                <li>
+                    moves: <span id="moves"></span>
+                </li>
+                <li id="points">points:</li>
+            </ul>
+        </section>
+        <ul class="deck">
+            <div class="notice-board-container" id="notice4">
+                <div class="count-down">3</div>
+            </div>
+            <div class= "card-posterior" row="1" col="1"></div>
+            <div class= "card-posterior" row="1" col="2"></div>
+            <div class= "card-posterior" row="1" col="3"></div>
+            <div class= "card-posterior" row="1" col="4"></div>
+            <div class= "card-posterior" row="2" col="1"></div>
+            <div class= "card-posterior" row="2" col="2"></div>
+            <div class= "card-posterior" row="2" col="3"></div>
+            <div class= "card-posterior" row="2" col="4"></div>
+            <div class= "card-posterior" row="3" col="1"></div>
+            <div class= "card-posterior" row="3" col="2"></div>
+            <div class= "card-posterior" row="3" col="3"></div>
+            <div class= "card-posterior" row="3" col="4"></div>
+            <div class= "card-posterior" row="4" col="1"></div>
+            <div class= "card-posterior" row="4" col="2"></div>
+            <div class= "card-posterior" row="4" col="3"></div>
+            <div class= "card-posterior" row="4" col="4"></div>
+            <li class="card" row="1" col="1">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="1" col="2">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="1" col="3">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="1" col="4">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="2" col="1">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="2" col="2">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="2" col="3">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="2" col="4">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="3" col="1">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="3" col="2">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="3" col="3">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="3" col="4">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="4" col="1">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="4" col="2">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="4" col="3">
+                <i class="fa"></i>
+            </li>
+            <li class="card" row="4" col="4">
+                <i class="fa"></i>
+            </li>
+        </ul>
+        </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

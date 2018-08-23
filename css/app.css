@@ -1,0 +1,499 @@
+/*
+** set all font size and background images
+*/
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 17px;
+    background: #ffffff url('../img/images.jpg'); /* Background pattern from Subtle Patterns */
+    font-family: cursive, sans-serif;
+    
+}
+
+* ul {
+    list-style-type: none;
+}
+
+body>div.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+}
+
+/*
+** SCORE PANEL
+*/
+
+section.score-panel {
+    display: flex;
+    width: calc(100% - 60px);
+    min-width: 260px;
+    max-width: 650px;
+    padding: 5px;
+    padding-left: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 30px;
+    position: relative;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    border-radius: 8px;
+    border: 2px solid gray;
+    background-color: #ffff44;
+}
+
+section.score-panel ul.left {
+    position: absolute;
+    white-space: nowrap;
+    top: 103%;
+    padding: 5px;
+    margin: 0;
+    left: calc((100% - 160px)/2);
+    background-color: #ffff44;
+    border-radius: 0 0 6px 6px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: center;
+    max-width: 165px;
+    max-height: 200px;
+    transform: scale(0);
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    z-index: 20;
+}
+
+section.score-panel ul.left li {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section.score-panel ul.info {
+    font-size: 0.75em;
+    display: flex;
+    white-space: pre-wrap;
+    flex-flow: column wrap;
+    justify-content: center;
+    padding: 1px;
+    margin: 0;
+}
+
+section.score-panel ul.info > li:first-child{
+    margin-bottom: 15px;
+}
+
+section.score-panel ul.right {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-between;
+    padding: 5px;
+    margin: 0;
+    margin-left: 30px;
+}
+
+section.score-panel ul.right li {
+    margin-right: 20px;
+    text-transform: capitalize;
+}
+
+
+section.score-panel>i {
+    margin: 0;
+    padding: 0;
+    font-size: 3em;
+    padding: 0 10px 0 35px;
+    border: 2px solid gray;
+    border-style: solid solid solid none;
+    border-radius: 0 50px 50px 0;
+    box-shadow: 4px 4px 5px 0 rgba(46, 61, 73, 0.5);
+    background-color: silver;
+}
+
+
+section.score-panel li{
+    cursor: pointer;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    padding: 2px;
+}
+
+/*
+**DECK FOR GAME'S CARDS 
+*/
+
+
+body>div.container>ul.deck {
+    display: grid;
+    width: calc(((100vw - 320px)*0.357143) + 260px);
+    min-width: 260px;
+    max-width: 460px;
+    height: calc(((100vw - 320px)*0.4) + 324px);
+    min-height: 324px;
+    max-height: 548px;
+    padding: 20px;
+    margin: 30px;
+    margin-bottom: 0;
+    background: linear-gradient( 160deg, #02ccba 0%, #aa7ecd 100%);
+    grid-template-rows: repeat(4, minmax(56px, 112px));
+    grid-template-columns: repeat(4, minmax(40px, 80px));
+    grid-gap:  20px 20px;
+    border-radius: 10px;
+    justify-content: space-evenly;
+    align-items: stretch;
+    align-content: space-evenly;
+    box-shadow: 4px 4px 5px 0 rgba(46, 61, 73, 0.5);
+}
+
+
+/*
+**CARD STYLES 
+*/
+
+ul.deck>li.card{
+    color: black;
+    background-color: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    perspective: 600px;
+    transition: transform 200ms linear;
+    box-shadow: 4px 4px 5px 0 rgba(46, 61, 73, 0.5);
+
+}
+
+*[row="1"] {
+    grid-row: 1 / span 1;
+}
+
+*[row="2"] {
+    grid-row: 2 / span 1;
+}
+
+*[row="3"] {
+    grid-row: 3 / span 1;
+}
+
+*[row="4"] {
+    grid-row: 4 / span 1;
+}
+
+*[col="1"] {
+    grid-column: 1 / span 1;
+}
+
+*[col="2"] {
+    grid-column: 2 / span 1;
+}
+
+*[col="3"] {
+    grid-column: 3 / span 1;
+}
+
+*[col="4"] {
+    grid-column: 4 / span 1;
+}
+
+ul.deck>div.card-posterior {
+    background: 
+    linear-gradient(115deg, transparent 75%, rgba(255,255,255,.8) 75%) 0 0,
+    linear-gradient(245deg, transparent 75%, rgba(255,255,255,.8) 75%) 0 0,
+    linear-gradient(115deg, transparent 75%, rgba(255,255,255,.8) 75%) 7px -15px,
+    linear-gradient(245deg, transparent 75%, rgba(255,255,255,.8) 75%) 7px -15px,
+    linear-gradient( to right, rgba(0,0,0,0.5), rgba(0,0,0,0.5) ),
+    white;
+    background-repeat: repeat;
+    background-clip: content-box, content-box, content-box, content-box, content-box, padding-box;
+    background-size: 15px 30px;
+    box-shadow: 4px 4px 5px 0 rgba(46, 61, 73, 0.5);
+    border-radius: 6px;
+    padding: 6px;
+    z-index: 10;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    perspective: 600px;
+    transition: transform 250ms linear;
+
+}
+
+
+/*
+** STYLES FOR NOTICES AND PROMPTS
+*/
+
+
+#notice4 {
+    position: absolute;
+    transform: scale(1);
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+
+ul.deck div.count-down {
+    border-radius: 2.5em;
+    font-size: 4em;
+    font-weight: bold;
+    background-color: yellow;
+    color: black;
+    padding: 0.6em 1em;
+}
+
+div.notice-board-container {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0);
+    transition: transform 1s ease;
+}
+
+
+section.notice-board {
+    width: 50vw;
+    min-width: 240px;
+    max-width: 300px;
+    min-height: 300px;
+    border-radius: 10px;
+    border: 4px solid gray;
+    border-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    background-color: #ffff44;
+}
+
+section.notice-board button {
+    background-color: silver;
+    border-radius: 15px;
+    min-width: 55px;
+    min-height: 27px;
+    font-size: 1.2em;
+    margin: 20px auto;
+    border: 2px outset;
+    border-color: white black black white;
+    cursor: pointer;
+
+}
+
+section.notice-board button:active {
+    border: 2px inset;
+    border-color: black white white black;
+}
+
+section.notice-board ul {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+section.game-mode ul li:first-child {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+section.game-mode ul li:last-child::after {
+    content: "coming soon!";
+    font-size: 0.7em;
+    vertical-align: super;
+    background-color: purple;
+    margin-left: 0;
+    border-radius: 3px;
+    color: white;
+}
+
+section.game-mode ul li {
+    cursor: pointer;
+    list-style-type: disc;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+section.game-mode ul li:hover {
+    background-color: gray;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    list-style-type: none;
+}
+
+h1.header-with-sub {
+    text-transform: capitalize;
+    font-size: 1.6em;
+    margin-bottom: 0;
+
+}
+
+h1.header-with-sub + p {
+    margin-top: 0;
+}
+
+h1.header-with-sub + p.indent {
+    text-indent: 3px;
+    font-size: 0.8em;
+    margin-bottom: 50px;
+}
+
+section.congratulations-msg{
+    transform: scale(0);
+    background: linear-gradient( 160deg, #02ccba 0%, #aa7ecd 100%);
+}
+
+section.congratulations-msg ul li {
+    display: inline-block;
+}
+
+li.star {
+    font-size: 2em;
+    color: yellow;
+    vertical-align: -0.1em;
+    text-shadow: rgba(8, 8, 8, 0.5) 5px 5px 10px;
+}
+
+section form input, section form button {
+    display: block;
+}
+
+section form input {
+    border-radius: 6px;
+    border: 2px inset;
+    margin-top: 25px;
+}
+
+
+/*
+** GAME ANIMATIONS AND EFFECTS
+*/
+
+
+
+*.hide {
+    display: none !important;
+}
+
+*.open {
+    transition: transform 200ms linear;
+    transform: translateZ(20px) rotateY(180deg);
+
+}
+
+*.mis-match {
+    animation: mismatch 80ms  alternate infinite linear;
+}
+
+@keyframes mismatch {
+    from{
+        background-color: red;
+        transform: rotateZ(-11deg)translateZ(20px) rotateY(180deg);
+    }  
+    50%{
+        background-color: red;
+        transform: rotateZ(0) translateZ(20px) rotateY(180deg);
+    }
+    to {
+        background-color: red;
+        transform: rotateZ(11deg) translateZ(20px) rotateY(180deg);
+    }
+    
+}
+
+*.match {
+    animation: match 250ms alternate 2 ease-in-out forwards;
+}
+
+@keyframes info-panel {
+    from{
+        background-color: #ffff44;
+        transform: scale(1);
+    }  
+    50%{
+        background-color: #ffff44;
+        transform: scale(1.30, 0.5);
+    }
+    to {
+        background-color: #ffff44;
+        transform: scale(0.5, 1.30);
+    }
+    
+}
+
+@keyframes match {
+    from{
+        background-color: #02ccba;
+        transform: translateY(0) translateZ(20px) rotateY(180deg);
+    }  
+    50%{
+        background-color: #02ccba;
+        transform: translateY(-10px)translateZ(20px) rotateY(180deg);
+    }
+    to {
+        background-color: #02ccba;
+        transform: translateY(0)translateZ(20px) rotateY(180deg);
+    }
+    
+}
+
+
+*.appear {
+    transition: transform 1s ease !important;
+    transform: scale(1) !important;
+}
+
+.info-panel {
+       animation: info-panel 300ms alternate 2 ease-in-out forwards;
+}
+
+.arrow-up::after{
+    font-family: "FontAwesome";
+    content: "\f0d8"
+}
+
+.arrow-down::after{
+    font-family: "FontAwesome";
+    content: "\f0d7"
+}
+
+
+/*
+** RESPONSIVE STYLES
+*/
+
+
+
+@media screen and (max-width: 380px) {
+    body {
+    font-size: 15px;
+    background: #ffffff url('../img/images.jpg'); /* Background pattern from Subtle Patterns */
+    font-family: 'Coda', cursive, sans-serif;
+    
+}
+
+}
