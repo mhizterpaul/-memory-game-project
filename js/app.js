@@ -32,7 +32,7 @@ let button = document.createElement('button');
 button.textContent = "replay";
 let openCard = 0, matchCount = 0, el1, colAttr1, rowAttr1, colAttr2, rowAttr2, el2,toggle1, toggle2, move = 0;
 const deck = document.querySelector('ul.deck');
-
+let infoPanel;
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -99,7 +99,7 @@ const startCountDown = function(){
                 window.setTimeout(function(){
                 	toggleCards()
                 	deck.addEventListener('click', gameLogic);
-                }, 3000);
+                }, 2500);
     			clearInterval(interval);
                 return;
     		}else{
@@ -352,30 +352,28 @@ refresh = function(){
     document.getElementById('moves').textContent = `${move}`;
     point.textContent= `${points}`;
     pointEl.appendChild(point);
-    document.querySelector('section.congratulations-msg').classList.toggle('appear');
+    document.querySelector('section.congratulations-msg').classList.remove('appear');
     window.setTimeout(
 		function(){ 
-			document.querySelector('div.container').classList.toggle('hide');
-			document.querySelector('section.congratulations-msg').classList.toggle('hide'); }
-		, 400)
+			document.querySelector('div.container').classList.add('hide');
+            document.querySelector('section.congratulations-msg').remove();
+			}
+		, 300)
     window.setTimeout(
 		function(){
-			document.querySelector('section.congratulations-msg').classList.toggle('hide');
-		    document.querySelector('section.congratulations-msg').remove();
 		    deck.classList.remove('hide')
 			document.getElementById('notice4').classList.toggle('hide'); 
-			document.querySelector('div.container').classList.toggle('hide');    
+			document.querySelector('div.container').classList.remove('hide');    
 			startCountDown();
 		     }
-		, 500)
+		, 400)
 };
 
 
 //Event Listeners for interacting with the game
 deck.addEventListener('click', gameLogic);
 
-let infoPanel;
-document.querySelector('section.score-panel > i.options').addEventListener('click', function(evt){
+document.querySelector('section.score-panel > i.options').addEventListener('click', function(evt) {
 	evt.target.classList.toggle('hide');
 	infoPanel = document.querySelector('ul.left').classList;
 	infoPanel.toggle('hide');
@@ -407,7 +405,6 @@ document.getElementById('restart').addEventListener('click', function(){
 	document.querySelector('section.score-panel > i.options').classList.toggle('hide');
 	endGame();
 	refresh();
-	document.querySelector('div.container').classList.toggle('hide');
 	deck.addEventListener('click', gameLogic);
 });
 
