@@ -151,7 +151,7 @@ document.forms[0].addEventListener('submit', function(e){
 const startTimer = function(evt){
 	if(evt.target.classList.contains('card-posterior')) {
 		counterInterval = setInterval(function(){
-	    		if (counterMin === 2){
+	    		if ((counterMin < 2 && move === 36) || (counterMin === 2)){
 	    			endGame();
 	    			clearInterval(counterInterval);
 	    			return;
@@ -202,16 +202,13 @@ const endGame = function() {
 		                });
     clearInterval(counterInterval);
     shuffleCards();
-    if (points <= 220 && counterMin === 2){
+    if ((counterMin < 2 && move === 36) || (counterMin === 2)){
     	openCard = 0;
 	    shuffleCards();
     	matchCount = 0;
     	header.textContent = "you lose!!!";
-    	mssg.textContent = "You couldn't finish on time. This means that you can't hold information for long in your working memory...Luckily you can improve this, all you need is more practise";
+    	mssg.textContent = "You guessed for too long. This means that you can't hold information for long in your working memory...Luckily you can improve this, all you need is more practise";
         starContainer.innerHTML = '<li>rating:</li><li class="star">&#x272f;</li>';
-    }
-    else if (document.querySelector('section.congratulations-msg')){
-         document.querySelector('section.congratulations-msg').remove();
     }
     else if (points > 110 && points < 200 && counterMin < 2){
     	header.textContent = "you win!!!";
@@ -338,20 +335,6 @@ const gameLogic = function(evt){
  
  //function to reset all dependensies for the next game;
 refresh = function(){
-	matchCount = 0;
-	streak=0;
-	openCard = 0;
-	initPoint = 1;
-	points = 0;
-	time = 0;
-    counterSec=0; 
-    counterMin=0;
-    move = 0;
-    deck.addEventListener('click', startTimer);
-    timerEl.textContent = `${counterMin}min : ${counterSec}sec`;
-    document.getElementById('moves').textContent = `${move}`;
-    point.textContent= `${points}`;
-    pointEl.appendChild(point);
     document.querySelector('section.congratulations-msg').classList.remove('appear');
     window.setTimeout(
 		function(){ 
@@ -361,6 +344,20 @@ refresh = function(){
 		, 300)
     window.setTimeout(
 		function(){
+	        matchCount = 0;
+			streak=0;
+			openCard = 0;
+			initPoint = 1;
+			points = 0;
+			time = 0;
+		    counterSec=0; 
+		    counterMin=0;
+		    move = 0;
+		    deck.addEventListener('click', startTimer);
+		    timerEl.textContent = `${counterMin}min : ${counterSec}sec`;
+		    document.getElementById('moves').textContent = `${move}`;
+		    point.textContent= `${points}`;
+		    pointEl.appendChild(point);
 		    deck.classList.remove('hide')
 			document.getElementById('notice4').classList.toggle('hide'); 
 			document.querySelector('div.container').classList.remove('hide');    
