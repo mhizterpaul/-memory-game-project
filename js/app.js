@@ -30,10 +30,9 @@ let starContainer = document.createElement('ul');
 let mssg = document.createElement('p');
 let button = document.createElement('button');
 button.textContent = "replay";
-let openCard = 0, matchCount = 0, el1, colAttr1, rowAttr1, colAttr2, rowAttr2, el2,toggle1, toggle2, move = 0;
+let openCard = 0, matchCount = 0, el1, colAttr1, rowAttr1, colAttr2, rowAttr2, el2, toggle1, toggle2, move = 0;
 const deck = document.querySelector('ul.deck');
-let infoPanel;
-
+let infoPanel, firstCard;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -248,28 +247,32 @@ const endGame = function() {
 //uses numbers to create a dynamic way to know when users have clicked the cards
 const gameLogic = function(evt){
 	if (evt.target.classList.contains('card-posterior')){
-		if(openCard === 0){
-			deck.removeEventListener('click', gameLogic);
-			colAttr1 = evt.target.getAttribute('col');
-			rowAttr1 = evt.target.getAttribute('row');
-			el1 = document.querySelector(`li[col="${colAttr1}"][row="${rowAttr1}"]`).firstElementChild;
-			toggle1 = document.querySelectorAll(`*[col="${colAttr1}"][row="${rowAttr1}"]`);
+		if(openCard === 0 ){
+			if (evt.target.classList.contains('open')){
+				return;
+			}
+			firstCard = evt.target;
+			colAttr1 = evt.target.getAttribute('data-col');
+			rowAttr1 = evt.target.getAttribute('data-row');
+			el1 = document.querySelector(`li[data-col="${colAttr1}"][data-row="${rowAttr1}"]`).firstElementChild;
+			toggle1 = document.querySelectorAll(`*[data-col="${colAttr1}"][data-row="${rowAttr1}"]`);
 			toggle1.forEach(function(el){
-							el.classList.toggle('open');
+							el.classList.add('open');
 							});
 			openCard = 1;
-			window.setTimeout(
-				function(){ deck.addEventListener('click', gameLogic);}
-				, 250);
-			}else{
-				colAttr2 = evt.target.getAttribute('col');
-			    rowAttr2 = evt.target.getAttribute('row');
-			    el2 = document.querySelector(`li[col="${colAttr2}"][row="${rowAttr2}"]`).firstElementChild;
-			    toggle2 = document.querySelectorAll(`*[col="${colAttr2}"][row="${rowAttr2}"]`);
+			}
+			else{
+                if (firstCard === evt.target){
+                	return;
+                }
+                colAttr2 = evt.target.getAttribute('data-col');
+			    rowAttr2 = evt.target.getAttribute('data-row');
+			    el2 = document.querySelector(`li[data-col="${colAttr2}"][data-row="${rowAttr2}"]`).firstElementChild;
+			    toggle2 = document.querySelectorAll(`*[data-col="${colAttr2}"][data-row="${rowAttr2}"]`);
 			    toggle2.forEach(function(el){
-							        el.classList.toggle('open');
+							        el.classList.add('open');
 							        });
-			    document.querySelector('ul.deck').removeEventListener('click', gameLogic);
+				
 				if (el1.className === el2.className && matchCount < 7){
 					setTimeout(
 						function(){ toggle2.forEach(function(el){
@@ -278,7 +281,6 @@ const gameLogic = function(evt){
 								    toggle1.forEach(function(el){
 												        el.classList.toggle('match');
 												        }); 
-								    deck.addEventListener('click', gameLogic);
 					    }, 250);
 			        matchCount++;
 			        calcPoint(true);
@@ -286,44 +288,43 @@ const gameLogic = function(evt){
 				else if (el1.className === el2.className && matchCount === 7) {
 					setTimeout(
 						function(){ toggle2.forEach(function(el){
-												        el.classList.toggle('match');
+												        el.classList.add('match');
 												        });
 								    toggle1.forEach(function(el){
-												        el.classList.toggle('match');
+												        el.classList.add('match');
 												        });
-								    deck.addEventListener('click', gameLogic);
 								    endGame();
 					    }, 250);
 					matchCount = 0;
 			        calcPoint(true);
-	
 				}else{
+					deck.removeEventListener('click', gameLogic);
 		            setTimeout(
 						function(){ toggle2.forEach(function(el){
-												        el.classList.toggle('mis-match');
+												        el.classList.add('mis-match');
 										                }); 
 					                toggle1.forEach(function(el){
-												        el.classList.toggle('mis-match');
+												        el.classList.add('mis-match');
 												        });
 						}, 250); 
 
 					setTimeout(
 						function(){ toggle2.forEach(function(el){
-										                el.classList.toggle('mis-match');
+										                el.classList.remove('mis-match');
 										                }); 
 							        toggle1.forEach(function(el){
-							        	                el.classList.toggle('mis-match');
+							        	                el.classList.remove('mis-match');
 							        	                });
 			        }, 600);
 
                     setTimeout(
 						function(){ toggle2.forEach(function(el){
-										                el.classList.toggle('open');
+										                el.classList.remove('open');
 										                }); 
 							        toggle1.forEach(function(el){
-							        	                el.classList.toggle('open');
+							        	                el.classList.remove('open');
 							        	                });
-							        deck.addEventListener('click', gameLogic);
+							      deck.addEventListener('click',gameLogic);
 
 			        }, 610);
 			        calcPoint(false); 
@@ -333,7 +334,6 @@ const gameLogic = function(evt){
 			move += 1;
 			document.getElementById('moves').textContent = `${move}`;	
 	}
-
 };
  
  //function to reset all dependensies for the next game;
