@@ -114,7 +114,7 @@ const startCountDown = function(){
 document.addEventListener('DOMContentLoaded', function(){
 	window.setTimeout(
 		function(){ document.getElementById('notice1').classList.toggle('appear')}
-		, 100);
+		, 10);
 	shuffleCards();
 });
 
@@ -124,7 +124,7 @@ document.querySelector('div#notice1 button').addEventListener('click', function(
 	document.getElementById('notice2').classList.toggle('hide');
 	window.setTimeout(
 		function(){ document.getElementById('notice2').classList.toggle('appear')}
-		, 100);
+		, 10);
 });
 
 document.querySelector('section.game-mode ul li:first-child').addEventListener('click', function(){
@@ -325,7 +325,7 @@ const gameLogic = function(evt){
 							        	                });
 							        deck.addEventListener('click', gameLogic);
 
-			        }, 650);
+			        }, 610);
 			        calcPoint(false); 
 				}
 				openCard = 0;
@@ -353,24 +353,21 @@ refresh = function(){
     point.textContent= `${points}`;
     pointEl.appendChild(point);
     document.querySelector('section.congratulations-msg').classList.toggle('appear');
-    document.querySelector('div.container').classList.toggle('hide');
     window.setTimeout(
-		function(){ document.querySelector('section.congratulations-msg').classList.toggle('hide'); }
-		, 300)
+		function(){ 
+			document.querySelector('div.container').classList.toggle('hide');
+			document.querySelector('section.congratulations-msg').classList.toggle('hide'); }
+		, 400)
     window.setTimeout(
 		function(){
 			document.querySelector('section.congratulations-msg').classList.toggle('hide');
-		    document.querySelector('section.congratulations-msg').remove(); }
-		, 350)
-    window.setTimeout(
-		function(){ deck.classList.remove('hide')
-		document.getElementById('notice4').classList.toggle('hide'); 
-		document.querySelector('div.container').classList.toggle('hide');    
-		startCountDown();
-	}
-		, 400)
-    
-
+		    document.querySelector('section.congratulations-msg').remove();
+		    deck.classList.remove('hide')
+			document.getElementById('notice4').classList.toggle('hide'); 
+			document.querySelector('div.container').classList.toggle('hide');    
+			startCountDown();
+		     }
+		, 500)
 };
 
 

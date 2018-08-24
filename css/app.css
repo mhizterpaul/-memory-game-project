@@ -271,7 +271,7 @@ div.notice-board-container {
     justify-content: center;
     align-items: center;
     transform: scale(0);
-    transition: transform 1s ease;
+    transition: transform 250ms ease;
 }
 
 
@@ -365,6 +365,7 @@ h1.header-with-sub + p.indent {
 section.congratulations-msg{
     transform: scale(0);
     background: linear-gradient( 160deg, #02ccba 0%, #aa7ecd 100%);
+    transition: transform 1s ease;
 }
 
 section.congratulations-msg ul li {
