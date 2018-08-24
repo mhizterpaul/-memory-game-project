@@ -401,11 +401,13 @@ document.querySelector('ul.left > li.arrow-down').addEventListener('click', func
 });
 
 document.getElementById('restart').addEventListener('click', function(){
-	endGame();
-	refresh();
+	document.querySelector('div.container').classList.toggle('hide');
 	document.querySelector('ul.left>li#resume').parentNode.classList.toggle('info-panel');
 	document.querySelector('ul.left>li#resume').parentNode.classList.toggle('hide');
 	document.querySelector('section.score-panel > i.options').classList.toggle('hide');
+	endGame();
+	refresh();
+	document.querySelector('div.container').classList.toggle('hide');
 	deck.addEventListener('click', gameLogic);
 });
 
