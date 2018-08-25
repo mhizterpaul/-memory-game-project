@@ -179,7 +179,7 @@ ul.deck>li.card{
     cursor: pointer;
     transform-style: preserve-3d;
     perspective: 600px;
-    transition: transform 250ms linear;
+    transition: transform 200ms linear;
     box-shadow: 4px 4px 5px 0 rgba(46, 61, 73, 0.5);
 
 }
@@ -234,7 +234,7 @@ ul.deck>div.card-posterior {
     backface-visibility: hidden;
     transform-style: preserve-3d;
     perspective: 600px;
-    transition: transform 250ms linear;
+    transition: transform 200ms linear;
 
 }
 

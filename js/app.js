@@ -259,6 +259,7 @@ const gameLogic = function(evt){
 			openCard = 1;
 			}
 			else{
+				deck.removeEventListener('click', gameLogic);
                 if (firstCard === evt.target){
                 	return;
                 }
@@ -278,7 +279,8 @@ const gameLogic = function(evt){
 								    toggle1.forEach(function(el){
 												        el.classList.add('match');
 												        }); 
-					    }, 250);
+								    deck.addEventListener('click', gameLogic);
+					    }, 200);
 			        matchCount++;
 			        calcPoint(true);
 				}
@@ -290,12 +292,13 @@ const gameLogic = function(evt){
 								    toggle1.forEach(function(el){
 												        el.classList.add('match');
 												        });
+								    deck.addEventListener('click', gameLogic);
 								    endGame();
-					    }, 250);
+					    }, 200);
 					matchCount = 0;
 			        calcPoint(true);
 				}else{
-					deck.removeEventListener('click', gameLogic);
+					
 		            setTimeout(
 						function(){ toggle2.forEach(function(el){
 												        el.classList.add('mis-match');
@@ -303,7 +306,7 @@ const gameLogic = function(evt){
 					                toggle1.forEach(function(el){
 												        el.classList.add('mis-match');
 												        });
-						}, 250); 
+						}, 200); 
 
 					setTimeout(
 						function(){ toggle2.forEach(function(el){
@@ -312,7 +315,7 @@ const gameLogic = function(evt){
 							        toggle1.forEach(function(el){
 							        	                el.classList.remove('mis-match');
 							        	                });
-			        }, 600);
+			        }, 550);
 
                     setTimeout(
 						function(){ toggle2.forEach(function(el){
@@ -323,7 +326,7 @@ const gameLogic = function(evt){
 							        	                });
 							      deck.addEventListener('click',gameLogic);
 
-			        }, 610);
+			        }, 570);
 			        calcPoint(false); 
 				}
 				openCard = 0;
