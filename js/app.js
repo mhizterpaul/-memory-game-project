@@ -273,10 +273,10 @@ const gameLogic = function(evt){
 				if (el1.className === el2.className && matchCount < 7){
 					setTimeout(
 						function(){ toggle2.forEach(function(el){
-												        el.classList.toggle('match');
+												        el.classList.add('match');
 												        });
 								    toggle1.forEach(function(el){
-												        el.classList.toggle('match');
+												        el.classList.add('match');
 												        }); 
 					    }, 250);
 			        matchCount++;
