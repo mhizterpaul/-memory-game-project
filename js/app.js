@@ -2,37 +2,43 @@
 
 
 /*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
+ * GAME PAUL CHINONSO
+ *   
  */
 
 
-//cache all needed variables in the global scope
-let refresh;
-let points = 0, initPoint = 1;
-const pointEl = document.getElementById('points');
-let point = document.createElement('span');
-let streak = 0;
-let interval;
-let time= 0;
-let countDownEl = document.querySelector('div.count-down');
-let counterInterval;
-let counterSec= 0;
-let counterMin = 0;
-let timerEl = document.getElementById('time-count');
-let mssgContainer = document.querySelector('div.container');
-let fragment = document.createDocumentFragment();
-let section = document.createElement('section');
-section.className = "notice-board congratulations-msg";
-let header = document.createElement('h1');
-header.className= "header-with-sub";
-let starContainer = document.createElement('ul');
-let mssg = document.createElement('p');
-let button = document.createElement('button');
-button.textContent = "replay";
-let openCard = 0, matchCount = 0, el1, colAttr1, rowAttr1, colAttr2, rowAttr2, el2, toggle1, toggle2, move = 0;
-const deck = document.querySelector('ul.deck');
-let infoPanel, firstCard;
+//cache all needed let variables in the global scope
+
+let refresh,
+    points = 0, initPoint = 1,
+	point = document.createElement('span'),
+	streak = 0,
+	time= 0,
+	interval,
+	counterInterval,
+	countDownEl = document.querySelector('div.count-down'),
+	counterSec= 0,
+	counterMin = 0,
+	timerEl = document.getElementById('time-count'),
+	mssgContainer = document.querySelector('div.container'),
+	fragment = document.createDocumentFragment(),
+	section = document.createElement('section'),
+	header = document.createElement('h1'),
+	starContainer = document.createElement('ul'),
+	mssg = document.createElement('p'),
+	button = document.createElement('button'),  
+	openCard = 0, matchCount = 0, el1, el2, toggle1, toggle2, move = 0,
+	infoPanel, firstCard, movesEl = document.getElementById('moves'), congratulationsMsg, toggleInterval;
+
+//cache all needed const variables
+const deck = document.querySelector('ul.deck'), 
+      pointEl = document.getElementById('points'),
+      notice1 = document.getElementById('notice1'),
+      notice2 = document.getElementById('notice2'),
+      notice3 = document.getElementById('notice3'),
+      notice4 = document.getElementById('notice4'),
+      cards = document.querySelectorAll('li.card'),
+      cardPosteriors = document.querySelectorAll('div.card-posterior');
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -49,6 +55,7 @@ function shuffle(array) {
     return array;
 };
 
+
 //function to assign symbols to each shuffled cards
 const shuffleCards = function(){
 	const cardItems = document.querySelectorAll('li.card>i');
@@ -61,7 +68,8 @@ const shuffleCards = function(){
 	"fa-leaf",
 	"fa-bicycle",
 	"fa-bomb"
-	], myCards = shuffle([...cardItems]);
+	], myCards = shuffle([...cardItems]); // <-- shuffles the cards
+	//assigns symbols to the shuffled cardItems
 	let index = 0;
 	for(const myCard of myCards){
 		if(index === cardSymbols.length){
@@ -81,7 +89,7 @@ const toggleCards= function(){
 	deck.removeEventListener('click', gameLogic);
 	const cards = document.getElementsByClassName('card');
 	const cardPosteriors = document.getElementsByClassName('card-posterior');
-	els = [...cards, ...cardPosteriors]
+	const els = [...cards, ...cardPosteriors]
 	for(const el of els) {
 		el.classList.toggle('open');
 	}
@@ -92,10 +100,10 @@ const toggleCards= function(){
 const startCountDown = function(){
 	interval = setInterval(function(){
     		if (time === 3){
-    			document.getElementById('notice4').classList.toggle('hide');
+    			notice4.classList.add('hide');
     			countDownEl.textContent = '3';
     			toggleCards();
-                window.setTimeout(function(){
+                 toggleInterval = window.setTimeout(function(){
                 	toggleCards()
                 	deck.addEventListener('click', gameLogic);
                 }, 2500);
@@ -112,25 +120,25 @@ const startCountDown = function(){
 //when dom content is loaded then show this pop up that prompt users to use play game;
 document.addEventListener('DOMContentLoaded', function(){
 	window.setTimeout(
-		function(){ document.getElementById('notice1').classList.toggle('appear')}
+		function(){ notice1.classList.toggle('appear')}
 		, 10);
 	shuffleCards();
 });
 
 //add event listerners so users can iteract with the game prompt
 document.querySelector('div#notice1 button').addEventListener('click', function(){
-	document.getElementById('notice1').classList.toggle('hide');
-	document.getElementById('notice2').classList.toggle('hide');
+	notice1.classList.toggle('hide');
+	notice2.classList.toggle('hide');
 	window.setTimeout(
-		function(){ document.getElementById('notice2').classList.toggle('appear')}
+		function(){ notice2.classList.toggle('appear')}
 		, 10);
 });
 
 document.querySelector('section.game-mode ul li:first-child').addEventListener('click', function(){
-	document.getElementById('notice2').classList.toggle('hide');
-	document.getElementById('notice3').classList.toggle('hide');
+	notice2.classList.toggle('hide');
+	notice3.classList.toggle('hide');
     window.setTimeout(
-		function(){ document.getElementById('notice3').classList.toggle('appear')}
+		function(){ notice3.classList.toggle('appear')}
 		, 100);
 });
 
@@ -140,18 +148,18 @@ document.forms[0].addEventListener('submit', function(e){
 	e.preventDefault();
     let name= document.querySelector('input').value;
     document.querySelector('ul.right> li:first-child').textContent= `player: ${name}`;
-    document.getElementById('notice3').classList.toggle('hide');
-	document.querySelector('div.container').classList.toggle('hide');
+    notice3.classList.toggle('hide');
+	mssgContainer.classList.toggle('hide');
     startCountDown()
 });
 
                                       
 
-//function that uses window setInterval method to creat a timer
+//function that uses window setInterval method to create a timer
 const startTimer = function(evt){
 	if(evt.target.classList.contains('card-posterior')) {
 		counterInterval = setInterval(function(){
-	    		if ((counterMin < 2 && move === 36) || (counterMin === 2)){
+	    		if (counterMin === 2){
 	    			endGame();
 	    			clearInterval(counterInterval);
 	    			return;
@@ -189,23 +197,22 @@ const calcPoint = function(val){
 
    
 
-//shuffle cards and print congratulations message to users;
-
+//shuffle cards and print congratulations message to users
 const endGame = function() {
+	section.className = "notice-board congratulations-msg";
+	header.className= "header-with-sub";
+	button.textContent = "replay";
 	initPoint = 1;
-	document.querySelector('ul.deck').classList.add('hide');
-    document.querySelectorAll('li.card').forEach(function(el){
-				        el.classList.remove('open','match');
+	deck.classList.add('hide');
+    cards.forEach(function(el){
+				        el.classList.remove('open','match','mis-match');
 		                });
-    document.querySelectorAll('div.card-posterior').forEach(function(el){
-				        el.classList.remove('open','match');
+    cardPosteriors.forEach(function(el){
+				        el.classList.remove('open','match','mis-match');
 		                });
     clearInterval(counterInterval);
     shuffleCards();
-    if ((counterMin < 2 && move === 36) || (counterMin === 2)){
-    	openCard = 0;
-	    shuffleCards();
-    	matchCount = 0;
+    if ((move === 40) || (counterMin === 2)){
     	header.textContent = "you lose!!!";
     	mssg.textContent = "You guessed for too long. This means that you can't hold information for long in your working memory...Luckily you can improve this, all you need is more practise";
         starContainer.innerHTML = '<li>rating:</li><li class="star">&#x272f;</li>';
@@ -216,12 +223,6 @@ const endGame = function() {
         starContainer.innerHTML= '<li>rating:</li><li class="star">&#x272f;</li><li class="star">&#x272f;</li>';
     }
     else if (points >= 200 && counterMin < 2){
-    	document.querySelectorAll('li.card').forEach(function(el){
-				        el.classList.remove('open','match');
-		                });
-        document.querySelectorAll('div.card-posterior').forEach(function(el){
-				        el.classList.remove('open','match');
-		                });
     	header.textContent = "you win!!!";
         mssg.textContent = "Now talking about champions. You were born with a great asset. Go conquer bud. You got above 80%, this shows you have a very strong memory";
         starContainer.innerHTML= '<li>rating:</li><li class="star">&#x272f;</li><li class="star">&#x272f;</li><li class="star">&#x272f;</li>';
@@ -233,24 +234,25 @@ const endGame = function() {
     section.appendChild(button);
     fragment.appendChild(section);
     mssgContainer.appendChild(fragment);
-
+    congratulationsMsg = document.querySelector('section.congratulations-msg');
     window.setTimeout(
-		function(){ document.querySelector('section.congratulations-msg').classList.add('appear');}
+		function(){ congratulationsMsg.classList.add('appear');}
 		, 100);
     document.querySelector('section.congratulations-msg > button').addEventListener('click', refresh)
-} 
+}
 
 
 //uses numbers to create a dynamic way to know when users have clicked the cards
 const gameLogic = function(evt){
 	if (evt.target.classList.contains('card-posterior')){
 		if(openCard === 0 ){
+			//prevent multiclick on a single card
 			if (evt.target.classList.contains('open')){
 				return;
 			}
 			firstCard = evt.target;
-			colAttr1 = evt.target.getAttribute('data-col');
-			rowAttr1 = evt.target.getAttribute('data-row');
+			const colAttr1 = evt.target.getAttribute('data-col'),
+			      rowAttr1 = evt.target.getAttribute('data-row');
 			el1 = document.querySelector(`li[data-col="${colAttr1}"][data-row="${rowAttr1}"]`).firstElementChild;
 			toggle1 = document.querySelectorAll(`*[data-col="${colAttr1}"][data-row="${rowAttr1}"]`);
 			toggle1.forEach(function(el){
@@ -259,90 +261,91 @@ const gameLogic = function(evt){
 			openCard = 1;
 			}
 			else{
-				deck.removeEventListener('click', gameLogic);
+				//prevent multiclick on a single card
                 if (firstCard === evt.target){
                 	return;
                 }
-                colAttr2 = evt.target.getAttribute('data-col');
+                 const colAttr2 = evt.target.getAttribute('data-col'),
 			    rowAttr2 = evt.target.getAttribute('data-row');
 			    el2 = document.querySelector(`li[data-col="${colAttr2}"][data-row="${rowAttr2}"]`).firstElementChild;
 			    toggle2 = document.querySelectorAll(`*[data-col="${colAttr2}"][data-row="${rowAttr2}"]`);
 			    toggle2.forEach(function(el){
 							        el.classList.add('open');
 							        });
-				
 				if (el1.className === el2.className && matchCount < 7){
 					setTimeout(
-						function(){ toggle2.forEach(function(el){
+						function(x,y){
+									x.forEach(function(el){
 												        el.classList.add('match');
 												        });
-								    toggle1.forEach(function(el){
+								    y.forEach(function(el){
 												        el.classList.add('match');
 												        }); 
-								    deck.addEventListener('click', gameLogic);
-					    }, 200);
+					    }, 200, toggle1, toggle2);
 			        matchCount++;
 			        calcPoint(true);
 				}
 				else if (el1.className === el2.className && matchCount === 7) {
 					setTimeout(
-						function(){ toggle2.forEach(function(el){
+						function(x,y){
+									x.forEach(function(el){
 												        el.classList.add('match');
 												        });
-								    toggle1.forEach(function(el){
+								    y.forEach(function(el){
 												        el.classList.add('match');
 												        });
-								    deck.addEventListener('click', gameLogic);
 								    endGame();
-					    }, 200);
+					    }, 200, toggle1, toggle2);
 					matchCount = 0;
 			        calcPoint(true);
 				}else{
 					
 		            setTimeout(
-						function(){ toggle2.forEach(function(el){
+						function(x,y){
+									x.forEach(function(el){
 												        el.classList.add('mis-match');
 										                }); 
-					                toggle1.forEach(function(el){
+					                y.forEach(function(el){
 												        el.classList.add('mis-match');
 												        });
-						}, 200); 
+						}, 200, toggle1, toggle2); 
 
 					setTimeout(
-						function(){ toggle2.forEach(function(el){
+						function(x,y){
+									x.forEach(function(el){
 										                el.classList.remove('mis-match');
 										                }); 
-							        toggle1.forEach(function(el){
+							        y.forEach(function(el){
 							        	                el.classList.remove('mis-match');
 							        	                });
-			        }, 550);
+			        }, 550, toggle1, toggle2);
 
                     setTimeout(
-						function(){ toggle2.forEach(function(el){
+						function(x,y){ 
+									x.forEach(function(el){
 										                el.classList.remove('open');
 										                }); 
-							        toggle1.forEach(function(el){
+							        y.forEach(function(el){
 							        	                el.classList.remove('open');
 							        	                });
-							      deck.addEventListener('click',gameLogic);
 
-			        }, 570);
+			        }, 570, toggle1, toggle2);
 			        calcPoint(false); 
 				}
 				openCard = 0;
 			}
-			move += 1;
-			document.getElementById('moves').textContent = `${move}`;	
+			move === 40 ? endGame() : move++;
+			movesEl.textContent = `${move}`;	
 	}
 };
  
  //function to reset all dependensies for the next game;
 refresh = function(){
-    document.querySelector('section.congratulations-msg').classList.remove('appear');
+    congratulationsMsg.classList.remove('appear');
     window.setTimeout(
 		function(){ 
-			document.querySelector('div.container').classList.add('hide');
-            document.querySelector('section.congratulations-msg').remove();
+			mssgContainer.classList.add('hide');
+            congratulationsMsg.remove();
 			}
 		, 300)
     window.setTimeout(
@@ -358,12 +361,12 @@ refresh = function(){
 		    move = 0;
 		    deck.addEventListener('click', startTimer);
 		    timerEl.textContent = `${counterMin}min : ${counterSec}sec`;
-		    document.getElementById('moves').textContent = `${move}`;
+		    movesEl.textContent = `${move}`;
 		    point.textContent= `${points}`;
 		    pointEl.appendChild(point);
 		    deck.classList.remove('hide')
-			document.getElementById('notice4').classList.toggle('hide'); 
-			document.querySelector('div.container').classList.remove('hide');    
+			notice4.classList.remove('hide'); 
+			mssgContainer.classList.remove('hide');    
 			startCountDown();
 		     }
 		, 400)
@@ -374,10 +377,10 @@ refresh = function(){
 deck.addEventListener('click', gameLogic);
 
 document.querySelector('section.score-panel > i.options').addEventListener('click', function(evt) {
-	evt.target.classList.toggle('hide');
+	evt.target.classList.add('hide');
 	infoPanel = document.querySelector('ul.left').classList;
-	infoPanel.toggle('hide');
-	infoPanel.toggle('info-panel');
+	infoPanel.remove('hide');
+	infoPanel.add('info-panel');
 	clearInterval(counterInterval);
 	deck.removeEventListener('click', gameLogic);
 	deck.removeEventListener('click', startTimer);
@@ -398,11 +401,13 @@ document.querySelector('ul.left > li.arrow-down').addEventListener('click', func
 	evt.target.classList.toggle('arrow-up');
 });
 
-document.getElementById('restart').addEventListener('click', function(){
-	document.querySelector('div.container').classList.toggle('hide');
-	document.querySelector('ul.left>li#resume').parentNode.classList.toggle('info-panel');
-	document.querySelector('ul.left>li#resume').parentNode.classList.toggle('hide');
-	document.querySelector('section.score-panel > i.options').classList.toggle('hide');
+document.getElementById('restart').addEventListener('click', function(){ 
+    clearInterval(toggleInterval);
+    deck.addEventListener('click', gameLogic);
+	mssgContainer.classList.toggle('hide');
+	infoPanel.remove('info-panel');
+	infoPanel.remove('hide');
+	document.querySelector('section.score-panel > i.options').classList.remove('hide');
 	endGame();
 	refresh();
 	deck.addEventListener('click', gameLogic);
@@ -410,5 +415,6 @@ document.getElementById('restart').addEventListener('click', function(){
 
 
 deck.addEventListener('click', startTimer);
+
 document.getElementById('exit').addEventListener('click', function(){ window.close()});
 
